@@ -7,16 +7,20 @@ module SimpleCov
     #
     class LinesCombiner < BaseCombiner
       def combine
-        return existed_coverage unless empty_coverage?
+        return existing_coverage unless empty_coverage?
 
         combine_lines
       end
 
+      # first_coverage = [nil, 1, 1, 1, nil, nil, 1, 0, nil, 1]
+      # second_coverage = [nil, 1, 1, 1, nil, 1, 1, 0, nil, nil]
+      # output ex: [nil, 2, 2, 2, nil, 1, 2, 0, nil, 1]
       def combine_lines
-        first_coverage.map.with_index do |first_coverage_val, index|
-          second_coverage_val = second_coverage[index]
-          merge_line_coverage(first_coverage_val, second_coverage_val)
+        merged_vals = []
+        @first_coverage.zip(@second_coverage) do |first_val, second_val|
+          merged_vals << merge_line_coverage(first_val, second_val)
         end
+        merged_vals
       end
 
       #

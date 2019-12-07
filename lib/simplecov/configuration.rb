@@ -306,7 +306,7 @@ module SimpleCov
     end
 
     #
-    # Define if the report should include any other standarts of coverage measurment except
+    # Define if the report should include any other standards of coverage measurment except
     # :lines which is the default
     #
     # @param [Boolean] target

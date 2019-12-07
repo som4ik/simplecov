@@ -223,7 +223,7 @@ module SimpleCov
       lines[number - 1]
     end
 
-    # The coverage for this file in percent. 0 if the file has no coverage lines
+    # The coverage for this file in percent. 0 if the file has no relevant lines
     def covered_percent
       return 100.0 if no_lines?
 

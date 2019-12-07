@@ -66,10 +66,7 @@ module SimpleCov
       # @param [Hash] given_branches
       #
       # @return [Array]
-      #
-      # rubocop:disable Metrics/MethodLength
-      def branches_collection(given_branches, root_id = nil)
-        @branches_collection ||= []
+      def branches_collection(given_branches, root_id = nil, collected_branches = [])
         given_branches.each do |branch_args_sym, value|
           branch_args = extract_branch_args(branch_args_sym.to_s)
           branch_args << root_id
@@ -78,14 +75,13 @@ module SimpleCov
           if value.is_a?(Integer)
             branch.coverage = value
           else
-            branches_collection(value, branch.id)
+            branches_collection(value, branch.id, collected_branches)
           end
 
-          @branches_collection << branch
+          collected_branches << branch
         end
-        @branches_collection
+        collected_branches
       end
-      # rubocop:enable Metrics/MethodLength
 
       # TODO: Refactoring candidate.
       # notice: avoid using `eval()`
@@ -147,7 +143,7 @@ module SimpleCov
       #
       # @param [Integer] line_number
       #
-      # @return [String] ex: "[1, '+'],[2, '-']" two times on negative branch and non on the positive
+      # @return [String] ex: "[1, '+'],[2, '-']" two hits on negative branch and one hit on the positive
       #
       def branch_per_line(line_number)
         branches_report[line_number].each_with_object(+" ") do |data, message|

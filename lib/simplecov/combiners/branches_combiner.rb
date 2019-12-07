@@ -12,7 +12,8 @@ module SimpleCov
       # @return [Hash]
       #
       def combine
-        return existed_coverage unless empty_coverage?
+        return existing_coverage unless empty_coverage?
+
         combine_branches
       end
 
@@ -26,15 +27,11 @@ module SimpleCov
       # @return [Hash]
       #
       def combine_branches
-        combined_result = first_coverage.clone
-        first_coverage.each do |(condition, branches_inside)|
-          branches_inside.each do |(branch_key, branch_coverage_value)|
-            compared_branch_coverage = second_coverage.dig(condition, branch_key)
-            combined_result[condition][branch_key] = branch_coverage_value + compared_branch_coverage.to_i
+        first_coverage.merge(second_coverage) do |_condition, first_matrices, second_matrices|
+          first_matrices.merge(second_matrices) do |_condition, first_run, second_run|
+            first_run + second_run.to_i
           end
         end
-
-        combined_result
       end
     end
   end

@@ -5,7 +5,7 @@ module SimpleCov
   # Responsible for producing file coverage metrics.
   #
   class RunFileCoverage
-    def self.start(*args)
+    def self.call(*args)
       new(*args).call
     end
 

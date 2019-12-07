@@ -26,47 +26,20 @@ module SimpleCov
       # @return [Hash]
       #
       def combine
-        return existed_coverage unless empty_coverage?
+        return existing_coverage unless empty_coverage?
 
-        combine_lines_coverage
-
-        combine_branches_coverage
-
-        combined_results
-      end
-
-      #
-      # Merge combined lines coverage results inside total results hash
-      #
-      # @return [Hash]
-      #
-      def combine_lines_coverage
-        combined_results[:lines] = LinesCombiner.combine!(
+        @combined_results[:lines] = LinesCombiner.combine(
           first_coverage[:lines],
           second_coverage[:lines]
         )
-      end
 
-      #
-      # Merge combined branches coverage results inside total results hash
-      #
-      # @return [Hash]
-      #
-      def combine_branches_coverage
-        combined_results[:branches] = BranchesCombiner.combine!(
+        @combined_results[:branches] = BranchesCombiner.combine(
           first_coverage[:branches],
           second_coverage[:branches]
         )
-      end
 
-    private
-
-      # rubocop:disable TrivialAccessors
-      # attr_reader under private for ruby < 2.3.7 raise "warning: private attribute?"
-      def combined_results
         @combined_results
       end
-      # rubocop:enable TrivialAccessors
     end
   end
 end
