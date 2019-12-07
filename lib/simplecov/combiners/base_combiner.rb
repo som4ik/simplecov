@@ -9,7 +9,7 @@ module SimpleCov
     class BaseCombiner
       attr_reader :first_coverage, :second_coverage
 
-      def self.combine!(*args)
+      def self.combine(*args)
         new(*args).combine
       end
 
@@ -21,10 +21,10 @@ module SimpleCov
     private
 
       def empty_coverage?
-        first_coverage && second_coverage
+        !!(first_coverage && second_coverage)
       end
 
-      def existed_coverage
+      def existing_coverage
         first_coverage || second_coverage
       end
     end

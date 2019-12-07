@@ -262,7 +262,7 @@ module SimpleCov
         result = result.dup
         Dir[tracked_files].each do |file|
           absolute = File.expand_path(file)
-          result[absolute] ||= RunFileCoverage.start(absolute)
+          result[absolute] ||= RunFileCoverage.call(absolute)
         end
       end
 
@@ -334,7 +334,7 @@ require "simplecov/combiners/base_combiner"
 require "simplecov/combiners/branches_combiner"
 require "simplecov/combiners/files_combiner"
 require "simplecov/combiners/lines_combiner"
-require "simplecov/run_results_combiner"
+require "simplecov/results_combiner"
 require "simplecov/branch_data_for_missing_file"
 require "simplecov/useless_results_remover"
 require "simplecov/run_file_coverage"
