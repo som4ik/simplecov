@@ -1,4 +1,4 @@
-Unrealeased
+Unreleased
 ===================
 
 ## Breaking
